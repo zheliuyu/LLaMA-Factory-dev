@@ -35,6 +35,7 @@ from .model_utils.quantization import configure_quantization
 from .model_utils.rope import configure_rope
 from .model_utils.valuehead import prepare_valuehead_model
 from .model_utils.visual import autocast_projector_dtype, configure_visual_model
+from .model_utils.hf_kernels import configure_hf_kernels
 
 
 if TYPE_CHECKING:
@@ -120,6 +121,7 @@ def patch_config(
     configure_visual_model(config)
     configure_packing(model_args, is_trainable)
     configure_kv_cache(config, model_args, is_trainable)
+    configure_hf_kernels(config, model_args)
 
     if getattr(config, "model_type", None) == "qwen":
         setattr(config, "use_flash_attn", model_args.flash_attn == "fa2")
