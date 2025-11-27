@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 logger = logging.get_logger(__name__)
 
 
-def configure_hf_kernels(
+def load_hf_kernels(
     config: "PretrainedConfig",
     model_args: "ModelArguments",
 ) -> None:
@@ -46,18 +46,14 @@ def configure_hf_kernels(
         model_type = getattr(config, "model_type", None)
         if model_type in model_list:
             _KERNELS_MAPPING = {
-                "SiLU": {
-                    "cuda": "kernels-community/activations:SiLU",
-                },
                 "RMSNorm": {
-                    "cuda": "kernels-community/liger_kernels:LigerRMSNorm",
-                    "npu": "kernels-ext-npu/rmsnorm:rmsnorm",
+                    "cuda":"kernels-community/liger_kernels:LigerRMSNorm",
+                    "npu":"kernels-ext-npu/rmsnorm:rmsnorm",
                 },
             }
-            _kernels_config = KernelConfig(_KERNELS_MAPPING)
-            config.kernels_config = _kernels_config
+        _kernel_config = KernelConfig(_KERNELS_MAPPING)
+        logger.info("Transformers.KernelConfig has been created.")
+        return _kernel_config
     except Exception as e:
         logger.warning(f"Failed to apply huggingface/kernels: {e}")
         return
-
-    logger.info("huggingface/kernels has been applied to the model.")
