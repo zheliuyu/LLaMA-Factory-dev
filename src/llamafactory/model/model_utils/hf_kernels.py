@@ -65,12 +65,6 @@ def load_hf_kernels(
                 "SiLU": {
                     "cuda":"kernels-community/activation:Silu",
                 },
-                "GeLU": {
-                    "cuda":"kernels-community/activation:Gelu",
-                },
-                "FastGELU": {
-                    "cuda":"kernels-community/activation:FastGELU",
-                }
             }
         _kernel_config = KernelConfig(_KERNELS_MAPPING)
         logger.info("Transformers.KernelConfig has been created.")
