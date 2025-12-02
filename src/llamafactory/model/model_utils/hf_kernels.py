@@ -43,10 +43,10 @@ def load_hf_kernels(
     if not model_args.enable_hf_kernels:
         return
 
-    if not is_transformers_version_greater_than("5.0.0.dev0"):
+    if not is_transformers_version_greater_than("5.0.0rc0"):
         logger.warning(
             "The installed transformers version does not support `kernels`. "
-            "Please upgrade to transformers>=5.0.0.dev0 to use this feature."
+            "Please upgrade to transformers>=5.0.0rc0 to use this feature."
         )
         return
 
